@@ -40,6 +40,7 @@ class SocialGrinder{
 		$module_objects = array();
 		foreach ($this->stream_settings['accounts'] as $module) {
 			$module_objects[$module] = new $this->accounts[$module]['module']($this->accounts[$module]['settings']);
+		
 		}
 	}
 
