@@ -1,0 +1,51 @@
+{
+	"accounts": {
+		"personal-twitter": {
+			"module": "twitter",
+			"cache": 160,
+			"settings": {
+				"username": "brudil"
+			}
+		},
+
+		"whs-twitter": {
+			"module": "twitter",
+			"cache": 300,
+			"settings": {
+				"username": "woollyhat"
+			}
+		},
+
+		"personal-github": {
+			"module": "github",
+			"cache": 60,
+			"settings": {
+				"username": "brudil"
+			}
+		},
+
+		"whs-blog": {
+			"module": "rss",
+			"cache": 200,
+			"settings": {
+				"url": "http://woollyhatstudios.com/feed/"
+			}
+		}
+
+	},
+
+	"streams": {
+		"personal": {
+			"accounts":[
+				"personal-twitter",
+				"whs-twitter",
+				"personal-github",
+				"whs-blog"
+			],
+			"cors": true,
+			"count": 9
+
+		}
+
+	}
+}
