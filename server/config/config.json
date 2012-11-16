@@ -4,7 +4,19 @@
 			"module": "twitter",
 			"cache": 160,
 			"settings": {
-				"username": "brudil"
+				"username": "brudil",
+				"include-retweets": true
+
+			}
+		},
+
+		"sharmech-twitter": {
+			"module": "twitter",
+			"cache": 160,
+			"settings": {
+				"username": "sharmech",
+				"include-retweets": true
+
 			}
 		},
 
@@ -12,7 +24,8 @@
 			"module": "twitter",
 			"cache": 300,
 			"settings": {
-				"username": "woollyhat"
+				"username": "woollyhat",
+				"include-retweets": true
 			}
 		},
 
@@ -21,6 +34,14 @@
 			"cache": 60,
 			"settings": {
 				"username": "brudil"
+			}
+		},
+
+		"sharmech-github": {
+			"module": "github",
+			"cache": 60,
+			"settings": {
+				"username": "sharmech"
 			}
 		},
 
@@ -39,13 +60,25 @@
 			"accounts":[
 				"personal-twitter",
 				"whs-twitter",
-				"personal-github",
-				"whs-blog"
+				"personal-github"
 			],
 			"cors": true,
-			"count": 9
+			"count": 15
+
+		},
+		"sharmech": {
+			"accounts":[
+				"sharmech-twitter",
+				"whs-twitter",
+				"sharmech-github"
+			],
+			"cors": true,
+			"count": 7
 
 		}
 
-	}
+	},
+
+	"default-stream": "personal",
+	"enable-cors": true
 }

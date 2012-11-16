@@ -15,8 +15,12 @@ As in it won't work, yet.
 * File based, because speed and eugh, databases.
 
 ## To Do's
-* Caching
-* Account based item counts
-* Default Modules (Twitter, Github, RSS)
-* Response
+* ~~Caching~~
+* Default Modules (~~Twitter~~, ~~Github~~, RSS)
+* ~~Response~~
 * ~~Config Design~~
+* Tidy Up!
+
+## Setup
+
+Open up the config at config/config.json.
