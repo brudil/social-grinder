@@ -3,7 +3,6 @@
 //Made by Brudil
 error_reporting(E_ALL);
 ini_set("display_errors", 1);
-header('Content-type: application/json');
 $time_start = microtime(true);
 
 date_default_timezone_set('Europe/London');
@@ -73,14 +72,27 @@ class SocialGrinder{
 
 		if(!isset($this->cache_manifest[$this->selected_stream])){
 			$this->cache_manifest[$this->selected_stream] = array('updated'=> 0, 'accounts'=> array());
-			echo json_encode($this->update_social_stream());
+			$this->display_json($this->update_social_stream());
 		}else{
 			if(time() > $this->cache_manifest[$this->selected_stream]['updated'] + (min($cache_times)*60)){
-				echo json_encode($this->update_social_stream());
+				$this->display_json($this->update_social_stream());
 			}else{
-				echo json_encode($this->get_account_cache(''));
+				$this->display_json($this->get_account_cache(''));
 			}
 		}
+	}
+
+	private function display_json($json){
+		header('Content-type: application/json');
+		if($this->stream_settings['cors']){
+			header("Access-Control-Allow-Origin: *");
+		}
+		if($this->stream_settings['client-cache'] != 0){
+			header("Cache-Control: private, max-age=" . ($this->stream_settings['client-cache']*60));
+    		header("Expires: " . gmdate('r', time() + ($this->stream_settings['client-cache']*60)));
+		}
+		echo json_encode($json);
+
 	}
 
 	private function update_social_stream(){
@@ -142,8 +154,7 @@ class SocialGrinder{
 interface Module{
 
 	public function __construct($settings);
-
-
+	public function get_items($count);
 
 }
 

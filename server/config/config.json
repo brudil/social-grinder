@@ -63,7 +63,8 @@
 				"personal-github"
 			],
 			"cors": true,
-			"count": 15
+			"count": 15,
+			"client-cache": 1
 
 		},
 		"sharmech": {
@@ -72,13 +73,13 @@
 				"whs-twitter",
 				"sharmech-github"
 			],
-			"cors": true,
-			"count": 7
+			"cors": false,
+			"count": 7,
+			"client-cache": 0
 
 		}
 
 	},
 
-	"default-stream": "personal",
-	"enable-cors": true
+	"default-stream": "personal"
 }
