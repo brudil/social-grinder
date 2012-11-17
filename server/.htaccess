@@ -1,0 +1,4 @@
+RewriteEngine on
+RewriteBase /social-grinder
+RewriteRule ^socialgrinder/([A-Za-z-]+).json$ SocialGrinder.php?stream=$1
+RewriteRule ^socialgrinder(/)?([A-Za-z0-9]+)?$ SocialGrinder.php

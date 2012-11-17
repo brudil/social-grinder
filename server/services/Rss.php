@@ -1,5 +1,5 @@
 <?php
-class Rss implements Module{
+class Rss implements Service{
 
 	private $settings;
 

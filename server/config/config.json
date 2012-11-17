@@ -1,7 +1,7 @@
 {
 	"accounts": {
 		"personal-twitter": {
-			"module": "twitter",
+			"service": "twitter",
 			"cache": 160,
 			"settings": {
 				"username": "brudil",
@@ -11,7 +11,7 @@
 		},
 
 		"sharmech-twitter": {
-			"module": "twitter",
+			"service": "twitter",
 			"cache": 160,
 			"settings": {
 				"username": "sharmech",
@@ -21,7 +21,7 @@
 		},
 
 		"whs-twitter": {
-			"module": "twitter",
+			"service": "twitter",
 			"cache": 300,
 			"settings": {
 				"username": "woollyhat",
@@ -30,7 +30,7 @@
 		},
 
 		"personal-github": {
-			"module": "github",
+			"service": "github",
 			"cache": 60,
 			"settings": {
 				"username": "brudil"
@@ -38,7 +38,7 @@
 		},
 
 		"sharmech-github": {
-			"module": "github",
+			"service": "github",
 			"cache": 60,
 			"settings": {
 				"username": "sharmech"
@@ -46,7 +46,7 @@
 		},
 
 		"whs-blog": {
-			"module": "rss",
+			"service": "rss",
 			"cache": 200,
 			"settings": {
 				"url": "http://woollyhatstudios.com/feed/"
@@ -79,7 +79,5 @@
 
 		}
 
-	},
-
-	"default-stream": "personal"
+	}
 }

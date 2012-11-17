@@ -1,5 +1,5 @@
 <?php
-class Twitter implements Module{
+class Twitter implements Service{
 
 	private $settings;
 
