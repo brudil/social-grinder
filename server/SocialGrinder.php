@@ -101,10 +101,12 @@ class SocialGrinder{
 		}
 		$this->selected_stream = $stream;
 
-		//Set $stream_settings to the settings for the selected stream
+		//If the asked for stream doesn't exist, 
 		if(!isset($this->config['streams'][$this->selected_stream])){
-			View::show_error('Stream does not exist!', 'There is no stream called \'' . $stream . '\' in your config.');
+			View::show_error('Stream does not exist!', 'There is no stream called \'' . $stream . '\' in your config.', true);
 		}
+
+		//Set $stream_settings to the settings for the selected stream
 		$this->stream_settings = $this->config['streams'][$this->selected_stream];
 		
 	}
@@ -199,11 +201,21 @@ class SocialGrinder{
 		//Call the get_items method, asking for max count number of items
 		$account_json = $account_service->get_items($this->stream_settings['count']);
 
+		//Add metadata to each time: the account, stream and service
+		$account_json = $this->add_item_metadata($account_json, $account, $this->accounts[$account]['service']);
+
 		//Save the account items to a cache file
 		$this->save_account_cache($account, $account_json);
 
 		//Return the account items
 		return $account_json;
+	}
+
+	private function add_item_metadata($items, $account_name, $service_name){
+		foreach ($items as $key => $item) {
+			$items[$key]['_SG'] = array('stream'=> $this->selected_stream, 'account'=> $account_name, 'service'=> $service_name);
+		}
+		return $items;
 	}
 
 	//Saves an account items to a cache
@@ -253,13 +265,16 @@ interface Service{
 class View{
 
 	//HTML of an error page
-	private static $html_error = "<!doctype html><html><head><meta charset='utf-8'><title>Social Grinder - Error!</title><style>body{background: #EFEFEF;padding-top:60px;font-family:sans-serif;}div{max-width:650px;padding:25px;width:80%%;margin:0 auto;box-shadow:0 0 8px 0 rgba(44, 44, 44, 0.8);border-radius:2px;border:1px solid #EEE;background:white;}</style></head><body><div><h1>%s</h1><p>%s</p></div></body></html>";
+	private static $html_error = "<!doctype html><html><head><meta charset='utf-8'><title>Social Grinder - Error!</title><style>body{background: #EFEFEF;margin:0;font-family:sans-serif;}div{max-width:650px;padding:25px;width:80%%;margin:0 auto;box-shadow: inset 0 0 8px 0 rgba(44, 44, 44, 0.3), 0 0 2px 0 rgba(255, 255, 255, 0.8);border-radius:2px;border:1px solid #AAA;background:white;margin-top:-10px;padding-top:40px;}</style></head><body><div><h1>%s</h1><p>%s</p></div></body></html>";
 	
 	//Static method for displaying script errors. Outputs JSON if requested via AJAX
-	public static function show_error($title, $description){
-		if($this->is_ajax()){
+	public static function show_error($title, $description, $fourohfour = false){
+		if(View::is_ajax()){
 			echo json_encode(array('error'=> array($title, $description)));
 		}else{
+			if($fourohfour){
+				header('HTTP/1.0 404 Not Found');
+			}
 			printf(View::$html_error, $title, $description);
 		}
 		exit;
@@ -275,11 +290,11 @@ class View{
 			header("Cache-Control: private, max-age=" . ($settings['client-cache']*60));
     		header("Expires: " . gmdate('r', time() + ($settings['client-cache']*60)));
 		}
-		echo json_encode(array('items'=> $json, 'run-time'=> ElapsedTime::get_time(), 'generated-by'=> get_about()));
+		echo json_encode(array('items'=> $json, 'run_time'=> ElapsedTime::get_time(), 'generated_by'=> get_about()));
 	}
 
 	//Returns true if the request was made via AJAX
-	function is_ajax() {
+	static function is_ajax() {
 		return (isset($_SERVER['HTTP_X_REQUESTED_WITH']) &&
 		($_SERVER['HTTP_X_REQUESTED_WITH'] == 'XMLHttpRequest'));
 	}
@@ -300,6 +315,37 @@ class ElapsedTime{
 		return microtime(true) - ElapsedTime::$time_start;
 	}
 
+}
+
+class ServiceUtilities{
+
+	//Not implemented, yet
+	public static function item_filter($array, $filter){
+
+	}
+
+	public static function get_URL_contents($url){
+		$ch = curl_init($url);
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+		curl_setopt($ch, CURLOPT_HEADER, 0);
+		if(file_exists(dirname(__FILE__) . '/config/cacert.pem')){
+			curl_setopt ($ch, CURLOPT_CAINFO, dirname(__FILE__)."/config/cacert.pem");
+		}
+		$response = curl_exec($ch);
+		curl_close($ch);
+		return $response;
+	}
+
+	//Not implemented, yet
+	public static function check_settings($settings, $schema){
+
+
+	}
+
+	//Not implemented, yet
+	public static function display_error($title, $description){
+
+	}
 }
 
 //Returns it's name and version
