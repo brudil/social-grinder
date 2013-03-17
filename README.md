@@ -13,7 +13,7 @@ Social Grinder takes your Twitter feed(s), github activity + more and grinds it 
 * Easy to add new services
 * Fast!
 * JSON based config
-* File based - no fucking around with MySQL, and it's faster.
+* File based - no fucking around with MySQL
 * Pwetty URL's
 * Excessively commented
 
